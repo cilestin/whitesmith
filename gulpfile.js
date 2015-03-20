@@ -9,9 +9,26 @@ var DOCROOT = 'build',
   gulpsmith = require('gulpsmith'),
   gulp_front_matter = require('gulp-front-matter'),
   Handlebars = require('handlebars'),
+  fingerprint = require('metalsmith-fingerprint'),
   markdown   = require('metalsmith-markdown'),
   templates  = require('metalsmith-templates'),
   sass       = require('metalsmith-sass');
+
+// Function to remove original compiled css files from being copied into destination
+// folder since fingerprinting will place its own copy in.
+var removeFingerprintOriginals = function() {
+  return function (files, metalsmith, done) {
+    var metadata = metalsmith.metadata();
+    if (_.has(metadata, 'fingerprint')) {
+      _.forIn(metadata.fingerprint, function(value, key) {
+        if (_.has(files, key)) {
+          delete files[key];
+        }
+      });
+    }
+    done();
+  }
+};
 
 gulp.task('build', function() {
   // Register partials, based on filename.
@@ -32,10 +49,12 @@ gulp.task('build', function() {
     .pipe(
       gulpsmith()
         .use(markdown())
+        .use(sass({outputStyle: 'compressed'}))
+        .use(fingerprint({pattern: ['styles/*.css', 'js/*.js']}))
+        .use(removeFingerprintOriginals())
         .use(templates({
           engine: 'handlebars'
         }))
-        .use(sass({outputStyle: 'compressed'}))
     ).pipe(connect.reload())
     .pipe(gulp.dest("./build"));
 });

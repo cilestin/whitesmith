@@ -1,2 +1,5 @@
 Handlebars templates go in this directory.
 They will be watched for changes and livereloaded when using `gulp serve`.
+
+You can get the fingerprinted assets URLs by using `{{ fingerprint.[ASSET_TYPE/FILENAME.css] }}`
+E.G.: `{{ fingerprint.[styles/main.css] }}`
