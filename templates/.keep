@@ -1,0 +1,2 @@
+Handlebars templates go in this directory.
+They will be watched for changes and livereloaded when using `gulp serve`.

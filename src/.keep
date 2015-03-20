@@ -1,0 +1,8 @@
+Markdown (.md) files go here.
+
+They will need the `template` front matter to know which handlebars template to be rendered under.
+
+E.G.:
+---
+template: index.handlebars
+---

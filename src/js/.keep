@@ -1,0 +1,3 @@
+Javascript (.js) files go here and are watched for changes when running `gulp serve`.
+
+Note that no special processing is done on JS files at this time, not even minification.
