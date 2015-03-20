@@ -1,0 +1,4 @@
+Handlebars partials go in this directory.
+They will be automatically included based on filename.
+
+E.G.: `header.handlebars` can be included using `{{> header }}` in templates.
